@@ -16,7 +16,7 @@ FROM campaigns;
 
 -- name: q01_channel_scorecard
 -- Business Question - How do marketing channels rank in total spend, revenue, profit, ROAS, and ROI percentage?
--- Finding: Email leads in total profit ($2.10B) and spend ($420.87M), but all 6 channels have nearly identical ROAS (~5.99 to 6.01) and ROI (~498.7% to 501.1%).
+-- Finding: Email leads in total profit ($2.10B) and spend ($420.87M), but all 6 channels have practically negligible ROAS differences (~5.99 to 6.03, spread 0.67%, eta-squared = 0.00003870).
 SELECT 
     channel_used,
     ROUND(SUM(acquisition_cost), 2) AS total_spend,
@@ -166,7 +166,7 @@ ORDER BY year, quarter, profit_rank;
 
 -- name: q09_customers_by_age_group
 -- Business Question - How do customer volume, spending, and campaign acceptance rates compare across age groups?
--- Finding: Customers aged 45-59 represent the largest spend ($630.9K total, $607.87 avg), but seniors (60+) exhibit the highest campaign engagement with a 30.06% acceptance rate.
+-- Finding: Age was computed as 2014 - Year_Birth (customers are 12 years older as of 2026); age 60+ (n=316) is associated with higher spend ($749.33) and acceptance (30.06%), but this pattern mostly disappears when controlling for income (q16).
 SELECT 
     age_group,
     COUNT(*) AS customer_count,
@@ -180,7 +180,7 @@ ORDER BY age_group ASC;
 
 -- name: q10_customers_by_income_group
 -- Business Question - How do purchasing habits and campaign acceptance rates vary across customer income brackets?
--- Finding: High income customers ($65k-$100k) have both the highest average spend ($1,283.47) and highest campaign acceptance rate (44.41%), more than 3x the acceptance rate of low income customers (14.21%).
+-- Finding: High Income ($65k-$100k, n=662) has highest total spend ($857.5K) and avg spend ($1,295.37) with 44.41% acceptance; Low Income (<$35k, n=549) averages $80.20 spend and 14.21% acceptance; Affluent (>$100k) has only n=12 customers (<100).
 SELECT 
     income_group,
     COUNT(*) AS customer_count,
@@ -260,7 +260,7 @@ ORDER BY share_gap_pct_pts DESC;
 
 -- name: q14_roas_spread_across_dimensions
 -- Business Question - Which business dimension displays the largest spread between its highest and lowest ROAS segments?
--- Finding: Channel Used has the largest ROAS spread at 0.0403 (0.67% spread), followed by Target Audience at 0.0358 (0.60%); all dimension spreads are under 0.7%, reflecting uniform synthetic generation.
+-- Finding: Target Audience has the largest effect size (eta-squared = 0.00005089, spread 0.60%), followed by Location and Channel Used (spread 0.67%, eta-squared = 0.00003870); all dimension variations are practically negligible (< 0.70% spread, eta-squared < 0.00006).
 WITH dim_roas AS (
     SELECT 'channel_used' AS dimension, channel_used AS dimension_value, SUM(revenue) / SUM(acquisition_cost) AS roas FROM campaigns GROUP BY channel_used
     UNION ALL
@@ -300,3 +300,15 @@ SELECT
 FROM campaigns
 GROUP BY channel_used
 ORDER BY median_roas DESC;
+
+
+-- name: q16_age_by_income
+-- Business question: does the age pattern survive once income group is held fixed?
+-- Finding: The apparent age effect largely disappears when controlling for income; spend and campaign acceptance are driven primarily by income tier (High income averages ~$1,200-$1,400 spend and ~43-51% acceptance across all age brackets).
+SELECT age_group, income_group,
+       COUNT(*) AS customers,
+       ROUND(AVG(total_spend)::numeric, 0) AS avg_spend,
+       ROUND(100.0 * AVG((campaigns_accepted > 0)::int), 1) AS pct_accepted_at_least_one
+FROM customers
+GROUP BY age_group, income_group
+ORDER BY age_group, income_group;

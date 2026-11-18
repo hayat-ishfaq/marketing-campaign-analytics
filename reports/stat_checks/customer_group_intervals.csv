@@ -1,0 +1,9 @@
+grouping_variable,group_name,n,flag_under_100,mean_total_spend,spend_ci_lower_95,spend_ci_upper_95,pct_accepting_at_least_one,wilson_ci_lower_95,wilson_ci_upper_95
+age_group,30-44,942,False,525.64,487.9,563.38,26.11,23.41,29.01
+age_group,45-59,757,False,645.21,604.32,686.1,27.61,24.54,30.9
+age_group,60+,316,False,749.33,683.46,815.19,30.06,25.27,35.33
+age_group,<30,221,False,609.15,517.78,700.51,26.24,20.89,32.42
+income_group,Affluent (>$100k),12,True,893.58,473.25,1313.92,33.33,13.81,60.94
+income_group,High ($65k-$100k),662,False,1295.37,1260.32,1330.43,44.41,40.67,48.22
+income_group,Low (<$35k),549,False,80.2,70.54,89.85,14.21,11.54,17.38
+income_group,Middle ($35k-$65k),1013,False,437.02,412.54,461.5,22.9,20.42,25.59
