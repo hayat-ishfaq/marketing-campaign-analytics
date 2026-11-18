@@ -33,3 +33,8 @@ CREATE TABLE customers (
     campaigns_accepted INT
     -- add the remaining cleaned columns you want to keep
 );
+
+-- Schema Type Harmonization:
+-- Verified that all money and ratio columns in 'campaigns' are NUMERIC.
+-- In 'customers', ensure 'income' is NUMERIC(12, 2) rather than double precision to support ROUND():
+ALTER TABLE customers ALTER COLUMN income TYPE NUMERIC(12, 2);

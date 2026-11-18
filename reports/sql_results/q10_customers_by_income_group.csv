@@ -1,0 +1,5 @@
+income_group,customer_count,total_spend_sum,avg_spend,avg_campaigns_accepted,pct_accepting_at_least_one
+High ($65k-$100k),662,857538.0,1295.37,0.88,44.41
+Affluent (>$100k),12,10723.0,893.58,1.33,33.33
+Middle ($35k-$65k),1013,442697.0,437.02,0.3,22.9
+Low (<$35k),549,44028.0,80.2,0.18,14.21

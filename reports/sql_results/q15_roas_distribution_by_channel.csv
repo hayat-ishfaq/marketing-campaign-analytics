@@ -1,0 +1,7 @@
+channel_used,min_roas,p25_roas,median_roas,p75_roas,max_roas,stddev_roas
+Facebook,3.0,4.5,6.04,7.53,9.0,1.7381
+Website,3.0,4.52,6.03,7.49,9.0,1.7251
+Google Ads,3.0,4.51,6.01,7.5,9.0,1.7336
+Email,3.0,4.48,6.0,7.51,9.0,1.7383
+Instagram,3.0,4.47,5.985,7.5,9.0,1.7394
+Youtube,3.0,4.49,5.97,7.5,9.0,1.7323

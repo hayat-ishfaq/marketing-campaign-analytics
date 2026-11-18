@@ -1,0 +1,21 @@
+ranking_group,campaign_id,company,channel_used,campaign_type,acquisition_cost,revenue,profit,roas
+top_10,13019,Datatech Solutions,Facebook,Influencer,19982.0,179438.36,159456.36,8.98
+top_10,33606,Datatech Solutions,Email,Email,19971.0,179339.58,159368.58,8.98
+top_10,72530,Innovate Industries,Website,Display,19920.0,179280.0,159360.0,9.0
+top_10,13708,Alpha Innovations,Google Ads,Display,19969.0,179321.62,159352.62,8.98
+top_10,73095,Techcorp,Email,Influencer,19994.0,179346.18,159352.18,8.97
+top_10,8281,Alpha Innovations,Youtube,Social Media,19966.0,179294.68,159328.68,8.98
+top_10,163709,Innovate Industries,Instagram,Display,19931.0,179179.69,159248.69,8.99
+top_10,11708,Innovate Industries,Instagram,Display,19934.0,179007.32,159073.32,8.98
+top_10,172561,Techcorp,Website,Search,19951.0,178760.96,158809.96,8.96
+top_10,70216,Innovate Industries,Google Ads,Influencer,19984.0,178656.96,158672.96,8.94
+bottom_10,50321,Alpha Innovations,Google Ads,Search,5007.0,15071.07,10064.07,3.01
+bottom_10,170975,Nexgen Systems,Youtube,Display,5042.0,15126.0,10084.0,3.0
+bottom_10,129983,Alpha Innovations,Website,Influencer,5022.0,15166.44,10144.44,3.02
+bottom_10,175310,Alpha Innovations,Facebook,Display,5029.0,15187.58,10158.58,3.02
+bottom_10,79651,Nexgen Systems,Website,Email,5030.0,15190.6,10160.6,3.02
+bottom_10,51727,Techcorp,Facebook,Social Media,5031.0,15193.62,10162.62,3.02
+bottom_10,138826,Innovate Industries,Google Ads,Display,5089.0,15267.0,10178.0,3.0
+bottom_10,121224,Nexgen Systems,Instagram,Email,5023.0,15219.69,10196.69,3.03
+bottom_10,138784,Datatech Solutions,Instagram,Influencer,5008.0,15224.32,10216.32,3.04
+bottom_10,155549,Nexgen Systems,Facebook,Display,5092.0,15326.92,10234.92,3.01

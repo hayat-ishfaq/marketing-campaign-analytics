@@ -1,0 +1,31 @@
+channel_used,campaign_type,total_clicks,estimated_conversions,conversion_rate_pct
+Email,Influencer,3678516.0,299579.3,8.14
+Email,Social Media,3692195.0,297181.38,8.05
+Email,Search,3673256.0,293972.53,8.0
+Email,Display,3725296.0,297602.89,7.99
+Email,Email,3724700.0,297057.55,7.98
+Facebook,Search,3569599.0,287283.25,8.05
+Facebook,Email,3611832.0,289961.29,8.03
+Facebook,Influencer,3558034.0,285413.43,8.02
+Facebook,Display,3664176.0,293825.9,8.02
+Facebook,Social Media,3634306.0,289806.43,7.97
+Google Ads,Search,3709432.0,298907.12,8.06
+Google Ads,Influencer,3697121.0,296726.73,8.03
+Google Ads,Email,3657490.0,293062.88,8.01
+Google Ads,Display,3621712.0,289146.89,7.98
+Google Ads,Social Media,3655052.0,290909.47,7.96
+Instagram,Social Media,3695608.0,296059.09,8.01
+Instagram,Influencer,3697990.0,295962.67,8.0
+Instagram,Display,3676679.0,293480.17,7.98
+Instagram,Search,3622201.0,288939.8,7.98
+Instagram,Email,3624176.0,288422.75,7.96
+Website,Display,3632274.0,292506.72,8.05
+Website,Influencer,3698710.0,297474.21,8.04
+Website,Social Media,3610693.0,289860.62,8.03
+Website,Email,3679223.0,294435.72,8.0
+Website,Search,3793728.0,303432.89,8.0
+Youtube,Social Media,3667870.0,294626.92,8.03
+Youtube,Display,3710842.0,297190.17,8.01
+Youtube,Influencer,3707286.0,296061.84,7.99
+Youtube,Search,3663928.0,291667.91,7.96
+Youtube,Email,3600481.0,284021.17,7.89

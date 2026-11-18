@@ -1,0 +1,21 @@
+campaign_id,company,channel_used,campaign_type,clicks,conversion_rate,estimated_conversions,acquisition_cost,revenue,roas
+27546,Innovate Industries,Google Ads,Display,1000,0.15,150.0,11775.0,100440.75,8.53
+49596,Techcorp,Youtube,Social Media,1000,0.15,150.0,7677.0,23491.62,3.06
+88647,Datatech Solutions,Email,Influencer,1000,0.15,150.0,13650.0,111384.0,8.16
+117252,Techcorp,Email,Influencer,1000,0.15,150.0,11018.0,48038.48,4.36
+119510,Techcorp,Google Ads,Display,1000,0.15,150.0,12428.0,39148.2,3.15
+4763,Innovate Industries,Website,Display,1000,0.14,140.0,19897.0,81776.67,4.11
+18320,Nexgen Systems,Google Ads,Social Media,1000,0.14,140.0,5060.0,19329.2,3.82
+31209,Alpha Innovations,Youtube,Influencer,1000,0.14,140.0,15262.0,81956.94,5.37
+32481,Datatech Solutions,Email,Influencer,1000,0.14,140.0,8779.0,70144.21,7.99
+33311,Nexgen Systems,Google Ads,Email,1000,0.14,140.0,15583.0,97861.24,6.28
+58765,Techcorp,Facebook,Social Media,1000,0.14,140.0,6899.0,35046.92,5.08
+64629,Innovate Industries,Email,Display,1000,0.14,140.0,5764.0,49628.04,8.61
+66019,Techcorp,Instagram,Display,1000,0.14,140.0,15743.0,96976.88,6.16
+68483,Nexgen Systems,Instagram,Search,1000,0.14,140.0,13959.0,109298.97,7.83
+70328,Nexgen Systems,Youtube,Display,1000,0.14,140.0,10385.0,63867.75,6.15
+85939,Alpha Innovations,Google Ads,Influencer,1000,0.14,140.0,9629.0,39864.06,4.14
+96088,Datatech Solutions,Email,Search,1000,0.14,140.0,16016.0,141421.28,8.83
+128461,Datatech Solutions,Website,Email,1000,0.14,140.0,14938.0,124732.3,8.35
+131980,Techcorp,Website,Social Media,1000,0.14,140.0,14216.0,102639.52,7.22
+140340,Alpha Innovations,Email,Search,1000,0.14,140.0,16472.0,119092.56,7.23
