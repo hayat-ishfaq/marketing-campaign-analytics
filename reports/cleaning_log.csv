@@ -1,0 +1,15 @@
+dataset,issue,rows_affected,action_taken
+marketing_campaign_dataset.csv,Acquisition_Cost stored as currency string with $ and commas,200000,"Stripped $, commas, and whitespace; converted to float64"
+marketing_campaign_dataset.csv,"Duration stored as string (""X days"")",200000,Extracted integer day counts using regex; converted to int64
+marketing_campaign_dataset.csv,Date stored as DD-MM-YY string,200000,Parsed with format %d-%m-%y into standard datetime64[ns]
+marketing_campaign_dataset.csv,Conversion_Rate scale consistency check,0,Verified values are valid decimal fractions (range 0.01 - 0.15)
+marketing_campaign_dataset.csv,Categorical text whitespace and casing,200000,Stripped leading/trailing whitespace and standardized title casing across 7 categorical columns
+marketing_campaign_dataset.csv,"Impossible values validation (cost <= 0, clicks > impressions)",0,"Audited for negative costs, impressions <= 0, and clicks > impressions; 0 anomalies detected"
+marketing_campaign_dataset.csv,Feature engineering (financial & calendar KPIs),200000,"Derived Revenue, Profit, CTR, CPC, ROAS (with zero-division guards), Year, Month, Quarter"
+marketing_campaign.csv,File format with semicolon delimiter and UTF-8 BOM,2240,"Loaded using sep="";"" and encoding=""utf-8-sig"""
+marketing_campaign.csv,Missing Income values,24,Imputed nulls using median income grouped by Education level
+marketing_campaign.csv,"Impossible birth years (< 1920: 1893, 1899, 1900)",3,Removed biological outlier records (implied ages > 94 in 2014 survey collection)
+marketing_campaign.csv,"Extreme income outlier ($666,666)",1,Removed outlier record exceeding reasonable economic threshold
+marketing_campaign.csv,Non-standard Marital_Status categories,2240,"Standardized (Together -> Partner, Alone -> Single, Absurd/YOLO -> Other, Widow -> Widowed)"
+marketing_campaign.csv,Non-standard Education categories,2240,"Standardized higher education labels (Graduation -> Graduate, 2n Cycle -> Master)"
+marketing_campaign.csv,Customer behavioral & demographic feature engineering,2236,"Derived Age (ref 2014), Total_Spend, Campaigns_Accepted, Age_Group, Income_Group"
