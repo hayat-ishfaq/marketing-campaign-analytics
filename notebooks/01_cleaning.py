@@ -2,7 +2,7 @@
 
 # %% [markdown]
 # # Marketing Campaign Performance Analytics
-# ## Notebook 01: Data Cleaning, Auditing & Feature Engineering
+# ## Notebook 01: Data Cleaning, Auditing, Feature Engineering & PostgreSQL Ingestion
 # 
 # ### Business Context
 # A digital marketing agency spends substantial budgets across multiple advertising channels (Google Ads, YouTube, Facebook, Instagram, Email, Website) but lacks a unified, data-driven understanding of campaign returns and customer behavior. 
@@ -20,8 +20,8 @@
 # > **These two datasets have NO shared key.** They represent two distinct analytical perspectives (macro channel performance vs. micro customer personality profiles). They must remain distinct tables and are never joined.
 
 # %% [markdown]
-# ### 0. Environment Setup and Project Paths
-# We configure standard data manipulation packages (`pandas`, `numpy`, `matplotlib`, `seaborn`) and establish robust relative paths using Python's `pathlib.Path` so this notebook runs portably from any directory.
+# ### 0. Environment Setup, Project Paths & Database Configuration
+# We configure data analysis packages (`pandas`, `numpy`, `matplotlib`, `seaborn`), load database environment credentials from `.env` via `python-dotenv`, and configure PostgreSQL connectivity via `SQLAlchemy`.
 
 # %%
 import os
@@ -31,6 +31,11 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+from dotenv import load_dotenv
+from sqlalchemy import create_engine, inspect, text
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Configure pandas formatting
 pd.set_option('display.max_columns', None)
@@ -57,6 +62,14 @@ print(f"Base Project Directory : {BASE_DIR.resolve()}")
 print(f"Raw Data Directory     : {RAW_DATA_DIR.resolve()}")
 print(f"Cleaned Data Directory : {CLEAN_DATA_DIR.resolve()}")
 print(f"Reports Directory      : {REPORTS_DIR.resolve()}")
+
+# Database URL check
+DATABASE_URL = os.getenv('DATABASE_URL')
+if DATABASE_URL:
+    masked_url = re.sub(r':([^@]+)@', ':****@', DATABASE_URL)
+    print(f"Database Configured    : {masked_url}")
+else:
+    print("Database URL not configured in .env (PostgreSQL load will be skipped).")
 
 # %% [markdown]
 # ---
@@ -142,8 +155,8 @@ for col in cust_cat_cols:
 # 
 # #### Campaign Performance Dataset (`marketing_campaign_dataset.csv` - 200,000 records)
 # 1. **`Acquisition_Cost` format issue:** Stored as string containing dollar signs (`$`), thousand separators (`,`), and trailing whitespace (e.g., `'$16,174.00 '`). Needs stripping and parsing to `float64`.
-# 2. **`Duration` format issue:** Stored as string text with unit suffix (e.g., `'30 days'`). Needs regex extraction to integer days.
-# 3. **`Date` format issue:** Stored as string in `DD-MM-YY` format (`01-01-21` through `31-12-21`). Must be parsed into standard datetime timestamps with day-first ordering.
+# 2. **`Duration` format issue:** Stored as string text with unit suffix (e.g., `'30 days'`). Needs regex extraction to integer days (`duration_days`).
+# 3. **`Date` format issue:** Stored as string in `DD-MM-YY` format (`01-01-21` through `31-12-21`). Must be parsed into standard datetime timestamps with day-first ordering (`campaign_date`).
 # 4. **`Conversion_Rate` verification:** Values range from `0.01` to `0.15` (mean ~0.08). This represents a **decimal fraction** (1% to 15%), not a whole percentage number.
 # 5. **Impossible values validation:**
 #    - `Clicks` range from 100 to 1,000; `Impressions` range from 1,000 to 10,000. `Clicks <= Impressions` holds true across 100% of rows.
@@ -166,8 +179,8 @@ for col in cust_cat_cols:
 # 
 # In this section, we apply best-practice transformations without mutating slices or raw files:
 # 1. **Strip currency symbols and convert `Acquisition_Cost` to float.**
-# 2. **Convert `Duration` to integer days.**
-# 3. **Parse `Date` as datetime with `%d-%m-%y`.**
+# 2. **Convert `Duration` to integer days (`duration_days`).**
+# 3. **Parse `Date` as datetime with `%d-%m-%y` (`campaign_date`).**
 # 4. **Verify and cast `Conversion_Rate` as float decimal fraction.**
 # 5. **Standardize categorical text (strip whitespace, ensure proper title casing).**
 # 6. **Audit and flag impossible values (cost $\le 0$, clicks > impressions, negative metrics).**
@@ -178,6 +191,7 @@ for col in cust_cat_cols:
 #    - $\text{CPC} = \frac{\text{Acquisition Cost}}{\text{Clicks}}$ (guarded against division by zero)
 #    - $\text{ROAS} = \frac{\text{Revenue}}{\text{Acquisition Cost}}$ (guarded against division by zero)
 #    - Calendar attributes: `Year`, `Month`, `Quarter`
+# 8. **Standardize column names to snake_case matching PostgreSQL database schema (`sql/01_schema.sql`).**
 
 # %%
 # Make explicit working copy to avoid SettingWithCopyWarning
@@ -262,8 +276,37 @@ df_camp_clean['Year'] = df_camp_clean['Date'].dt.year
 df_camp_clean['Month'] = df_camp_clean['Date'].dt.month
 df_camp_clean['Quarter'] = df_camp_clean['Date'].dt.quarter
 
+# 8. Align column names to snake_case matching PostgreSQL schema (sql/01_schema.sql)
+camp_col_rename = {
+    'Campaign_ID': 'campaign_id',
+    'Company': 'company',
+    'Campaign_Type': 'campaign_type',
+    'Target_Audience': 'target_audience',
+    'Duration': 'duration_days',
+    'Channel_Used': 'channel_used',
+    'Conversion_Rate': 'conversion_rate',
+    'Acquisition_Cost': 'acquisition_cost',
+    'ROI': 'roi',
+    'Location': 'location',
+    'Language': 'language',
+    'Clicks': 'clicks',
+    'Impressions': 'impressions',
+    'Engagement_Score': 'engagement_score',
+    'Customer_Segment': 'customer_segment',
+    'Date': 'campaign_date',
+    'Revenue': 'revenue',
+    'Profit': 'profit',
+    'CTR': 'ctr',
+    'CPC': 'cpc',
+    'ROAS': 'roas',
+    'Year': 'year',
+    'Month': 'month',
+    'Quarter': 'quarter'
+}
+df_camp_clean = df_camp_clean.rename(columns=camp_col_rename)
+
 print(f"\nCleaned Campaign Dataset Dimensions: {df_camp_clean.shape[0]:,} rows x {df_camp_clean.shape[1]} columns")
-display(df_camp_clean[['Campaign_ID', 'Company', 'Channel_Used', 'Acquisition_Cost', 'Revenue', 'Profit', 'CTR', 'CPC', 'ROAS', 'Date']].head())
+display(df_camp_clean[['campaign_id', 'company', 'channel_used', 'acquisition_cost', 'revenue', 'profit', 'ctr', 'cpc', 'roas', 'campaign_date']].head())
 
 # %% [markdown]
 # ---
@@ -283,6 +326,7 @@ display(df_camp_clean[['Campaign_ID', 'Company', 'Channel_Used', 'Acquisition_Co
 #    - `Campaigns_Accepted`: Sum of binary response flags across marketing campaigns 1 through 5, plus the latest promotional campaign (`Response`).
 #    - `Age_Group`: Demographic cohorts (`'<30'`, `'30-44'`, `'45-59'`, `'60+'`).
 #    - `Income_Group`: Income tiers (`'Low (<$35k)'`, `'Middle ($35k-$65k)'`, `'High ($65k-$100k)'`, `'Affluent (>$100k)'`).
+# 5. **Standardize column names to lowercase snake_case matching PostgreSQL database schema.**
 
 # %%
 df_cust_clean = df_cust_raw.copy()
@@ -321,8 +365,8 @@ edu_map = {
 }
 df_cust_clean['Education'] = df_cust_clean['Education'].map(edu_map).fillna(df_cust_clean['Education'])
 
-# Parse Dt_Customer to datetime
-df_cust_clean['Dt_Customer'] = pd.to_datetime(df_cust_clean['Dt_Customer'], format='%Y-%m-%d')
+# Parse Dt_Customer to datetime string YYYY-MM-DD
+df_cust_clean['Dt_Customer'] = pd.to_datetime(df_cust_clean['Dt_Customer'], format='%Y-%m-%d').dt.strftime('%Y-%m-%d')
 
 # 4. Derived Columns
 # Reference year 2014 reflects the survey collection window (2012 - mid 2014)
@@ -342,24 +386,27 @@ df_cust_clean['Campaigns_Accepted'] = df_cust_clean[cmp_flags].sum(axis=1)
 # Demographic Age Groups
 age_bins = [0, 29, 44, 59, 120]
 age_labels = ['<30', '30-44', '45-59', '60+']
-df_cust_clean['Age_Group'] = pd.cut(df_cust_clean['Age'], bins=age_bins, labels=age_labels, right=True)
+df_cust_clean['Age_Group'] = pd.cut(df_cust_clean['Age'], bins=age_bins, labels=age_labels, right=True).astype(str)
 
 # Socioeconomic Income Groups
 inc_bins = [0, 35000, 65000, 100000, np.inf]
 inc_labels = ['Low (<$35k)', 'Middle ($35k-$65k)', 'High ($65k-$100k)', 'Affluent (>$100k)']
-df_cust_clean['Income_Group'] = pd.cut(df_cust_clean['Income'], bins=inc_bins, labels=inc_labels, right=False)
+df_cust_clean['Income_Group'] = pd.cut(df_cust_clean['Income'], bins=inc_bins, labels=inc_labels, right=False).astype(str)
+
+# 5. Standardize all column names to lowercase snake_case
+df_cust_clean.columns = [col.lower() for col in df_cust_clean.columns]
 
 print(f"Cleaned Customer Dataset Dimensions: {df_cust_clean.shape[0]:,} rows x {df_cust_clean.shape[1]} columns")
-display(df_cust_clean[['ID', 'Age', 'Age_Group', 'Education', 'Marital_Status', 'Income', 'Income_Group', 'Total_Spend', 'Campaigns_Accepted']].head())
+display(df_cust_clean[['id', 'age', 'age_group', 'education', 'marital_status', 'income', 'income_group', 'total_spend', 'campaigns_accepted']].head())
 
 # %% [markdown]
 # ---
 # ## Part D: Cleaning Log, Exports, and Pipeline Validation
 # 
-# In this final stage, we:
+# In this stage, we:
 # 1. Compile an audit log documenting all detected issues and remediation actions.
 # 2. Export `reports/cleaning_log.csv`.
-# 3. Export cleaned datasets to `data/cleaned/campaigns_clean.csv` and `data/cleaned/customers_clean.csv`.
+# 3. Export cleaned datasets to `data/cleaned/campaigns_clean.csv` and `data/cleaned/customers_clean.csv` with standardized snake_case schema.
 # 4. Execute automated assertions to ensure production-grade data integrity.
 
 # %%
@@ -375,13 +422,13 @@ cleaning_log_entries = [
         'dataset': 'marketing_campaign_dataset.csv',
         'issue': 'Duration stored as string ("X days")',
         'rows_affected': len(df_camp_raw),
-        'action_taken': 'Extracted integer day counts using regex; converted to int64'
+        'action_taken': 'Extracted integer day counts using regex; renamed to duration_days'
     },
     {
         'dataset': 'marketing_campaign_dataset.csv',
         'issue': 'Date stored as DD-MM-YY string',
         'rows_affected': len(df_camp_raw),
-        'action_taken': 'Parsed with format %d-%m-%y into standard datetime64[ns]'
+        'action_taken': 'Parsed with format %d-%m-%y into standard datetime64[ns]; renamed to campaign_date'
     },
     {
         'dataset': 'marketing_campaign_dataset.csv',
@@ -403,9 +450,9 @@ cleaning_log_entries = [
     },
     {
         'dataset': 'marketing_campaign_dataset.csv',
-        'issue': 'Feature engineering (financial & calendar KPIs)',
+        'issue': 'Feature engineering & schema normalization',
         'rows_affected': len(df_camp_raw),
-        'action_taken': 'Derived Revenue, Profit, CTR, CPC, ROAS (with zero-division guards), Year, Month, Quarter'
+        'action_taken': 'Derived revenue, profit, ctr, cpc, roas, year, month, quarter; standardized columns to snake_case'
     },
     {
         'dataset': 'marketing_campaign.csv',
@@ -447,7 +494,7 @@ cleaning_log_entries = [
         'dataset': 'marketing_campaign.csv',
         'issue': 'Customer behavioral & demographic feature engineering',
         'rows_affected': len(df_cust_clean),
-        'action_taken': 'Derived Age (ref 2014), Total_Spend, Campaigns_Accepted, Age_Group, Income_Group'
+        'action_taken': 'Derived age (ref 2014), total_spend, campaigns_accepted, age_group, income_group; lowercased columns to snake_case'
     }
 ]
 
@@ -459,7 +506,7 @@ cleaning_log_path = REPORTS_DIR / 'cleaning_log.csv'
 df_cleaning_log.to_csv(cleaning_log_path, index=False)
 print(f"\nSaved Cleaning Log to : {cleaning_log_path.resolve()}")
 
-# Save Cleaned Datasets
+# Save Cleaned Datasets (snake_case columns)
 camp_clean_path = CLEAN_DATA_DIR / 'campaigns_clean.csv'
 cust_clean_path = CLEAN_DATA_DIR / 'customers_clean.csv'
 
@@ -476,30 +523,30 @@ print(f"Saved Cleaned Customers: {cust_clean_path.resolve()}")
 # %%
 # --- Campaign Dataset Assertions ---
 print("Running Campaign Data Validations...")
-assert df_camp_clean['Acquisition_Cost'].isnull().sum() == 0, "Null values found in Acquisition_Cost!"
-assert df_camp_clean['Revenue'].isnull().sum() == 0, "Null values found in Revenue!"
-assert df_camp_clean['Profit'].isnull().sum() == 0, "Null values found in Profit!"
-assert df_camp_clean['CTR'].isnull().sum() == 0, "Null values found in CTR!"
-assert df_camp_clean['CPC'].isnull().sum() == 0, "Null values found in CPC!"
-assert df_camp_clean['ROAS'].isnull().sum() == 0, "Null values found in ROAS!"
-assert (df_camp_clean['Clicks'] <= df_camp_clean['Impressions']).all(), "Found Clicks > Impressions!"
-assert (df_camp_clean['Acquisition_Cost'] > 0).all(), "Found non-positive Acquisition_Cost!"
-assert pd.api.types.is_float_dtype(df_camp_clean['Acquisition_Cost']), "Acquisition_Cost is not float!"
-assert pd.api.types.is_datetime64_any_dtype(df_camp_clean['Date']), "Date is not datetime64!"
-assert pd.api.types.is_integer_dtype(df_camp_clean['Duration']), "Duration is not integer!"
+assert df_camp_clean['acquisition_cost'].isnull().sum() == 0, "Null values found in acquisition_cost!"
+assert df_camp_clean['revenue'].isnull().sum() == 0, "Null values found in revenue!"
+assert df_camp_clean['profit'].isnull().sum() == 0, "Null values found in profit!"
+assert df_camp_clean['ctr'].isnull().sum() == 0, "Null values found in ctr!"
+assert df_camp_clean['cpc'].isnull().sum() == 0, "Null values found in cpc!"
+assert df_camp_clean['roas'].isnull().sum() == 0, "Null values found in roas!"
+assert (df_camp_clean['clicks'] <= df_camp_clean['impressions']).all(), "Found clicks > impressions!"
+assert (df_camp_clean['acquisition_cost'] > 0).all(), "Found non-positive acquisition_cost!"
+assert pd.api.types.is_float_dtype(df_camp_clean['acquisition_cost']), "acquisition_cost is not float!"
+assert pd.api.types.is_datetime64_any_dtype(df_camp_clean['campaign_date']), "campaign_date is not datetime64!"
+assert pd.api.types.is_integer_dtype(df_camp_clean['duration_days']), "duration_days is not integer!"
 print("✔ All Campaign assertions PASSED.")
 
 # --- Customer Dataset Assertions ---
 print("\nRunning Customer Data Validations...")
-assert df_cust_clean['Income'].isnull().sum() == 0, "Null values found in Income!"
-assert df_cust_clean['Age'].isnull().sum() == 0, "Null values found in Age!"
-assert df_cust_clean['Total_Spend'].isnull().sum() == 0, "Null values found in Total_Spend!"
-assert df_cust_clean['Campaigns_Accepted'].isnull().sum() == 0, "Null values found in Campaigns_Accepted!"
-assert df_cust_clean['Age'].min() >= 18, f"Implausible minor age found: {df_cust_clean['Age'].min()}"
-assert df_cust_clean['Age'].max() <= 100, f"Implausible senior age found: {df_cust_clean['Age'].max()}"
-assert df_cust_clean['Income'].max() < 600000, f"Extreme income outlier not removed: {df_cust_clean['Income'].max()}"
-assert df_cust_clean['Marital_Status'].isin(['Married', 'Partner', 'Single', 'Divorced', 'Widowed', 'Other']).all(), "Unstandardized marital status found!"
-assert df_cust_clean['Education'].isin(['Basic', 'Graduate', 'Master', 'PhD']).all(), "Unstandardized education found!"
+assert df_cust_clean['income'].isnull().sum() == 0, "Null values found in income!"
+assert df_cust_clean['age'].isnull().sum() == 0, "Null values found in age!"
+assert df_cust_clean['total_spend'].isnull().sum() == 0, "Null values found in total_spend!"
+assert df_cust_clean['campaigns_accepted'].isnull().sum() == 0, "Null values found in campaigns_accepted!"
+assert df_cust_clean['age'].min() >= 18, f"Implausible minor age found: {df_cust_clean['age'].min()}"
+assert df_cust_clean['age'].max() <= 100, f"Implausible senior age found: {df_cust_clean['age'].max()}"
+assert df_cust_clean['income'].max() < 600000, f"Extreme income outlier not removed: {df_cust_clean['income'].max()}"
+assert df_cust_clean['marital_status'].isin(['Married', 'Partner', 'Single', 'Divorced', 'Widowed', 'Other']).all(), "Unstandardized marital status found!"
+assert df_cust_clean['education'].isin(['Basic', 'Graduate', 'Master', 'PhD']).all(), "Unstandardized education found!"
 print("✔ All Customer assertions PASSED.")
 
 # --- Row and Column Reconciliation ---
@@ -508,6 +555,48 @@ print(f"Campaign Rows     : {len(df_camp_raw):,} raw -> {len(df_camp_clean):,} c
 print(f"Customer Rows     : {len(df_cust_raw):,} raw -> {len(df_cust_clean):,} clean ({len(df_cust_clean)/len(df_cust_raw):.2%} retention; 4 outlier rows dropped)")
 print(f"Campaign Features : {df_camp_raw.shape[1]} raw -> {df_camp_clean.shape[1]} clean (+8 derived features)")
 print(f"Customer Features : {df_cust_raw.shape[1]} raw -> {df_cust_clean.shape[1]} clean (+5 derived features)")
+
+# %% [markdown]
+# ---
+# ## Part E: PostgreSQL Database Ingestion & Verification
+# 
+# To enable high-performance SQL analytics and Power BI connectivity, we ingest the cleaned datasets directly into PostgreSQL using `SQLAlchemy` and `psycopg2` via the `DATABASE_URL` environment variable configured in `.env`.
+# 
+# This step:
+# 1. Connects to PostgreSQL `marketing_analytics`.
+# 2. Loads `campaigns` and `customers` with chunked batching (`chunksize=10,000`).
+# 3. Verifies table creation and exact row counts via live SQL queries.
+
+# %%
+db_url = os.getenv('DATABASE_URL')
+
+if db_url:
+    print("Connecting to PostgreSQL database...")
+    engine = create_engine(db_url)
+    
+    # Ingest Campaign dataset
+    print(f"Ingesting 'campaigns' table ({len(df_camp_clean):,} records, chunksize=10,000)...")
+    df_camp_clean.to_sql('campaigns', engine, if_exists='replace', index=False, chunksize=10000)
+    
+    # Ingest Customer dataset
+    print(f"Ingesting 'customers' table ({len(df_cust_clean):,} records)...")
+    df_cust_clean.to_sql('customers', engine, if_exists='replace', index=False)
+    
+    # SQL Verification queries
+    print("\n--- Live Database Validation ---")
+    with engine.connect() as conn:
+        camp_db_count = conn.execute(text("SELECT COUNT(*) FROM campaigns;")).scalar()
+        cust_db_count = conn.execute(text("SELECT COUNT(*) FROM customers;")).scalar()
+        
+        print(f"PostgreSQL 'campaigns' table row count: {camp_db_count:,} (Expected: {len(df_camp_clean):,})")
+        print(f"PostgreSQL 'customers' table row count: {cust_db_count:,} (Expected: {len(df_cust_clean):,})")
+        
+        assert camp_db_count == len(df_camp_clean), "Row count discrepancy in PostgreSQL 'campaigns'!"
+        assert cust_db_count == len(df_cust_clean), "Row count discrepancy in PostgreSQL 'customers'!"
+        
+        print("✔ PostgreSQL tables populated and row counts verified successfully!")
+else:
+    print("Notice: DATABASE_URL not set in .env. Ingestion step skipped.")
 
 # %% [markdown]
 # ---
