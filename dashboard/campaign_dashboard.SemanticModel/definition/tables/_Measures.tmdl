@@ -178,6 +178,16 @@ table _Measures
 		displayFolder: Customers
 		lineageTag: 812ecb3b-d5db-40c9-bde3-78122e90509a
 
+	/// Formats average spend with the customer count for each customer group.
+	measure 'Spend and n' = FORMAT([Avg Spend Per Customer], "$#,0") & "  (n = " & FORMAT([Customer Count], "#,0") & ")"
+		displayFolder: Customers
+		lineageTag: cee20c62-e156-47a5-8632-0c087f93158c
+
+	/// Returns amber for customer groups under 100 and white otherwise.
+	measure 'Small Group Color' = IF([Customer Count] < 100, "#FCEFD2", "#FFFFFF")
+		displayFolder: Customers
+		lineageTag: 91491411-d474-4e80-b5ea-4d0091ecc566
+
 	column 'Measure Holder'
 		isHidden
 		lineageTag: d17ed7d3-7ca3-4301-9d74-7f800e618485

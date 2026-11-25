@@ -10,7 +10,7 @@
     "tabOrder": 3900
   },
   "visual": {
-    "visualType": "lineClusteredColumnComboChart",
+    "visualType": "clusteredColumnChart",
     "query": {
       "queryState": {
         "Category": {
@@ -47,24 +47,6 @@
               },
               "queryRef": "_Measures.ROAS",
               "nativeQueryRef": "ROAS"
-            }
-          ]
-        },
-        "Y2": {
-          "projections": [
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "ROAS All Channels"
-                }
-              },
-              "queryRef": "_Measures.ROAS All Channels",
-              "nativeQueryRef": "ROAS All Channels"
             }
           ]
         }
@@ -105,54 +87,6 @@
           },
           "selector": {
             "metadata": "_Measures.ROAS"
-          }
-        },
-        {
-          "properties": {
-            "fill": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#E07B39'"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "selector": {
-            "metadata": "_Measures.ROAS All Channels"
-          }
-        }
-      ],
-      "lineStyles": [
-        {
-          "properties": {
-            "strokeWidth": {
-              "expr": {
-                "Literal": {
-                  "Value": "2D"
-                }
-              }
-            },
-            "lineStyle": {
-              "expr": {
-                "Literal": {
-                  "Value": "'dashed'"
-                }
-              }
-            },
-            "showMarker": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            }
-          },
-          "selector": {
-            "metadata": "_Measures.ROAS All Channels"
           }
         }
       ],
@@ -211,24 +145,17 @@
                   }
                 }
               }
-            }
-          },
-          "selector": {
-            "metadata": "_Measures.ROAS"
-          }
-        },
-        {
-          "properties": {
-            "show": {
+            },
+            "valueFormatString": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "'0.00'"
                 }
               }
             }
           },
           "selector": {
-            "metadata": "_Measures.ROAS All Channels"
+            "metadata": "_Measures.ROAS"
           }
         }
       ],
@@ -245,7 +172,7 @@
             "end": {
               "expr": {
                 "Literal": {
-                  "Value": "9D"
+                  "Value": "8D"
                 }
               }
             },
@@ -321,7 +248,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
                 }
               }
             },
@@ -527,7 +454,20 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'ROAS by channel with an orange dashed all-channel ROAS benchmark.'"
+                  "Value": "'ROAS by channel with a zero-based vertical axis from 0 to 8 and two-decimal data labels.'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
                 }
               }
             }

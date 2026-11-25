@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Year",
+                    "value": "Month",
                     "textStyle": {
                       "fontFamily": "Segoe UI Semibold",
                       "fontSize": "11px",
@@ -102,7 +102,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Year slicer label.'"
+                  "Value": "'Month slicer label.'"
                 }
               }
             }

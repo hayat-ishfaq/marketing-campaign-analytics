@@ -23,11 +23,11 @@
                       "Entity": "Calendar"
                     }
                   },
-                  "Property": "Year"
+                  "Property": "Month"
                 }
               },
-              "queryRef": "Calendar.Year",
-              "nativeQueryRef": "Year",
+              "queryRef": "Calendar.Month",
+              "nativeQueryRef": "Month",
               "active": true
             }
           ]
@@ -61,7 +61,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Year'"
+                  "Value": "'Month'"
                 }
               }
             }
@@ -185,7 +185,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Dropdown slicer for Year.'"
+                  "Value": "'Dropdown slicer for Month, sorted chronologically by Month Start.'"
                 }
               }
             }

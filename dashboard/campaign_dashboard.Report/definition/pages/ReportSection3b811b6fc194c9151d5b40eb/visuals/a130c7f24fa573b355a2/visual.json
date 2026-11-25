@@ -61,25 +61,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Avg Spend Per Customer"
+                  "Property": "Spend and n"
                 }
               },
-              "queryRef": "_Measures.Avg Spend Per Customer",
-              "nativeQueryRef": "Avg Spend Per Customer"
-            },
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Customer Count"
-                }
-              },
-              "queryRef": "_Measures.Customer Count",
-              "nativeQueryRef": "Customer Count"
+              "queryRef": "_Measures.Spend and n",
+              "nativeQueryRef": "Spend and n"
             }
           ]
         }
@@ -281,68 +267,13 @@
               "solid": {
                 "color": {
                   "expr": {
-                    "Conditional": {
-                      "Cases": [
-                        {
-                          "Condition": {
-                            "Comparison": {
-                              "ComparisonKind": 3,
-                              "Left": {
-                                "Measure": {
-                                  "Expression": {
-                                    "SourceRef": {
-                                      "Entity": "_Measures"
-                                    }
-                                  },
-                                  "Property": "Customer Count"
-                                }
-                              },
-                              "Right": {
-                                "Literal": {
-                                  "Value": "100D"
-                                }
-                              }
-                            }
-                          },
-                          "Value": {
-                            "Literal": {
-                              "Value": "'#FCEFD2'"
-                            }
-                          }
-                        },
-                        {
-                          "Condition": {
-                            "Comparison": {
-                              "ComparisonKind": 2,
-                              "Left": {
-                                "Measure": {
-                                  "Expression": {
-                                    "SourceRef": {
-                                      "Entity": "_Measures"
-                                    }
-                                  },
-                                  "Property": "Customer Count"
-                                }
-                              },
-                              "Right": {
-                                "Literal": {
-                                  "Value": "100D"
-                                }
-                              }
-                            }
-                          },
-                          "Value": {
-                            "Literal": {
-                              "Value": "'#FFFFFF'"
-                            }
-                          }
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "_Measures"
                         }
-                      ],
-                      "DefaultValue": {
-                        "Literal": {
-                          "Value": "'#FFFFFF'"
-                        }
-                      }
+                      },
+                      "Property": "Small Group Color"
                     }
                   }
                 }
@@ -357,7 +288,7 @@
                 }
               }
             ],
-            "metadata": "_Measures.Customer Count"
+            "metadata": "_Measures.Spend and n"
           }
         }
       ],
@@ -559,7 +490,20 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Matrix of average spend and customer count by age group rows and income group columns. Affluent customers are excluded; counts below 100 are highlighted amber.'"
+                  "Value": "'Matrix of average spend with customer counts by age group and income group. Affluent customers are excluded; count cells under 100 are highlighted amber.'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "visualHeader": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
                 }
               }
             }
@@ -626,48 +570,6 @@
             }
           ]
         }
-      },
-      {
-        "name": "2298daa8ef8aaf04dbe4",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "public customers"
-              }
-            },
-            "Property": "age_group"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "815d1401cdccca836b23",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures"
-              }
-            },
-            "Property": "Avg Spend Per Customer"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "aab96561dabb1cdf8cce",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures"
-              }
-            },
-            "Property": "Customer Count"
-          }
-        },
-        "type": "Advanced"
       }
     ]
   }
