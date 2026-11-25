@@ -1,41 +1,80 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "41d6ef517090e14cde99",
+  "name": "cff640e7a3c346eb7d6e",
   "position": {
-    "x": 640,
-    "y": 7,
-    "z": 200,
-    "height": 38,
-    "width": 620,
-    "tabOrder": 200
+    "x": 0,
+    "y": 0,
+    "z": 0,
+    "height": 51,
+    "width": 1280,
+    "tabOrder": 0
   },
   "visual": {
-    "visualType": "pageNavigator",
+    "visualType": "shape",
     "objects": {
-      "pages": [
+      "shape": [
         {
           "properties": {
-            "showByDefault": {
+            "tileShape": {
+              "expr": {
+                "Literal": {
+                  "Value": "'rectangle'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "default"
+          }
+        }
+      ],
+      "fill": [
+        {
+          "properties": {
+            "show": {
               "expr": {
                 "Literal": {
                   "Value": "true"
                 }
               }
             },
-            "showHiddenPages": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
+            "fillColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#14395B'"
+                    }
+                  }
                 }
               }
             },
-            "showTooltipPages": {
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "default"
+          }
+        }
+      ],
+      "outline": [
+        {
+          "properties": {
+            "show": {
               "expr": {
                 "Literal": {
                   "Value": "false"
                 }
               }
             }
+          },
+          "selector": {
+            "id": "default"
           }
         }
       ]
@@ -107,7 +146,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Page navigator for Executive Overview, Campaign Analysis, Campaign Rankings, and Customer Insights.'"
+                  "Value": "'Dark navy report header band.'"
                 }
               }
             }

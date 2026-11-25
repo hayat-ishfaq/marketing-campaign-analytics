@@ -1,41 +1,36 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "58dfd91b99aa7cc18a4f",
+  "name": "8927e399dcdf7afb3b7e",
   "position": {
-    "x": 640,
-    "y": 7,
-    "z": 200,
-    "height": 38,
-    "width": 620,
-    "tabOrder": 200
+    "x": 19,
+    "y": 696,
+    "z": 1400,
+    "height": 24,
+    "width": 1242,
+    "tabOrder": 1400
   },
   "visual": {
-    "visualType": "pageNavigator",
+    "visualType": "textbox",
     "objects": {
-      "pages": [
+      "general": [
         {
           "properties": {
-            "showByDefault": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Public Kaggle datasets that appear synthetic. CAC is estimated. ROAS = 1 + ROI by construction.",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "11px",
+                      "color": "#6B7A8F",
+                      "fontStyle": "italic"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "left"
               }
-            },
-            "showHiddenPages": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            },
-            "showTooltipPages": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            }
+            ]
           }
         }
       ]
@@ -107,7 +102,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Page navigator for Executive Overview, Campaign Analysis, Campaign Rankings, and Customer Insights.'"
+                  "Value": "'Public Kaggle datasets that appear synthetic. CAC is estimated. ROAS equals 1 plus ROI by construction.'"
                 }
               }
             }
