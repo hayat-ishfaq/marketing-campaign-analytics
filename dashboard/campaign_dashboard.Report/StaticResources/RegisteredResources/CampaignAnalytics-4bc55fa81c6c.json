@@ -1,0 +1,45 @@
+{
+  "name": "CampaignAnalytics-4bc55fa81c6c.json",
+  "dataColors": [
+    "#1F6FB2",
+    "#E07B39",
+    "#2E9E6B",
+    "#8A5FBF",
+    "#C94F6D",
+    "#6B7A8F",
+    "#D4A72C",
+    "#3AAFA9"
+  ],
+  "background": "#FFFFFF",
+  "foreground": "#252423",
+  "tableAccent": "#1F6FB2",
+  "good": "#2E9E6B",
+  "neutral": "#D4A72C",
+  "bad": "#C94F6D",
+  "maximum": "#1F6FB2",
+  "center": "#DCE9F5",
+  "minimum": "#F4F8FC",
+  "null": "#B3B0AD",
+  "textClasses": {
+    "callout": {
+      "fontSize": 32,
+      "fontFace": "Segoe UI Semibold",
+      "color": "#252423"
+    },
+    "title": {
+      "fontSize": 14,
+      "fontFace": "Segoe UI Semibold",
+      "color": "#252423"
+    },
+    "header": {
+      "fontSize": 12,
+      "fontFace": "Segoe UI Semibold",
+      "color": "#252423"
+    },
+    "label": {
+      "fontSize": 10,
+      "fontFace": "Segoe UI",
+      "color": "#605E5C"
+    }
+  }
+}
