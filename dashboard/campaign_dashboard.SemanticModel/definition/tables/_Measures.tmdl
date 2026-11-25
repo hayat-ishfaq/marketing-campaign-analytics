@@ -160,8 +160,27 @@ table _Measures
 		displayFolder: Titles
 		lineageTag: ed324b4c-f0f7-4062-ae36-d4f8d76f9457
 
+	/// Counts customers in the High ($65k-$100k) income band.
+	measure 'High-Income Customers' = CALCULATE ( [Customer Count], REMOVEFILTERS ( 'public customers'[income_group] ), 'public customers'[income_group] = "High ($65k-$100k)" )
+		formatString: #,0
+		displayFolder: Customers
+		lineageTag: 2143ed84-532e-4e69-9226-7147c73cc88b
+
+	/// Compares average customer spend for the High and Low income bands.
+	measure 'Spend Multiple High vs Low' = DIVIDE ( CALCULATE ( [Avg Spend Per Customer], REMOVEFILTERS ( 'public customers'[income_group] ), 'public customers'[income_group] = "High ($65k-$100k)" ), CALCULATE ( [Avg Spend Per Customer], REMOVEFILTERS ( 'public customers'[income_group] ), 'public customers'[income_group] = "Low (<$35k)" ) )
+		formatString: 0"x"
+		displayFolder: Customers
+		lineageTag: 35208a87-0b2d-44c7-aa2f-cc2f1e951ca0
+
+	/// Compares acceptance rates for the High and Low income bands.
+	measure 'Acceptance Multiple High vs Low' = DIVIDE ( CALCULATE ( [Acceptance Rate], REMOVEFILTERS ( 'public customers'[income_group] ), 'public customers'[income_group] = "High ($65k-$100k)" ), CALCULATE ( [Acceptance Rate], REMOVEFILTERS ( 'public customers'[income_group] ), 'public customers'[income_group] = "Low (<$35k)" ) )
+		formatString: 0.0"x"
+		displayFolder: Customers
+		lineageTag: 812ecb3b-d5db-40c9-bde3-78122e90509a
+
 	column 'Measure Holder'
 		isHidden
+		lineageTag: d17ed7d3-7ca3-4301-9d74-7f800e618485
 		isNameInferred
 		sourceColumn: [Measure Holder]
 

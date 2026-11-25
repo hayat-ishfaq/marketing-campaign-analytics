@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.15.0/schema.json",
   "name": "ebe151c8c5599598dd55",
   "position": {
     "x": 228,
@@ -27,7 +27,8 @@
                 }
               },
               "queryRef": "public campaigns.channel_used",
-              "nativeQueryRef": "channel_used"
+              "nativeQueryRef": "channel_used",
+              "active": true
             }
           ]
         }

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.15.0/schema.json",
   "name": "8022eb69b3b1bc82e303",
   "position": {
     "x": 19,
@@ -13,24 +13,6 @@
     "visualType": "pivotTable",
     "query": {
       "queryState": {
-        "Rows": {
-          "projections": [
-            {
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "public campaigns"
-                    }
-                  },
-                  "Property": "channel_used"
-                }
-              },
-              "queryRef": "public campaigns.channel_used",
-              "nativeQueryRef": "channel_used"
-            }
-          ]
-        },
         "Columns": {
           "projections": [
             {
@@ -45,7 +27,27 @@
                 }
               },
               "queryRef": "public campaigns.campaign_type",
-              "nativeQueryRef": "campaign_type"
+              "nativeQueryRef": "campaign_type",
+              "active": true
+            }
+          ]
+        },
+        "Rows": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "public campaigns"
+                    }
+                  },
+                  "Property": "channel_used"
+                }
+              },
+              "queryRef": "public campaigns.channel_used",
+              "nativeQueryRef": "channel_used",
+              "active": true
             }
           ]
         },

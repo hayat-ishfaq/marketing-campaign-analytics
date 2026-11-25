@@ -292,6 +292,7 @@ table 'public customers'
 		lineageTag: 7d119173-7713-468f-9acd-770e815ac005
 		summarizeBy: none
 		sourceColumn: age_group
+		sortByColumn: age_group_sort
 
 		annotation SummarizationSetBy = Automatic
 
@@ -300,8 +301,25 @@ table 'public customers'
 		lineageTag: 2a8bd6bc-84fd-4fcd-ba05-849b8b060ccc
 		summarizeBy: none
 		sourceColumn: income_group
+		sortByColumn: income_group_sort
 
 		annotation SummarizationSetBy = Automatic
+
+	/// Hidden sort key: Low, Middle, High, then Affluent.
+	column income_group_sort = SWITCH ( TRUE(), ISBLANK ( 'public customers'[income] ), BLANK(), 'public customers'[income] < 35000, 1, 'public customers'[income] < 65000, 2, 'public customers'[income] <= 100000, 3, 4 )
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 7367cfa6-1e1d-4e1c-8e0b-d5a19d897358
+		summarizeBy: none
+
+	/// Hidden sort key: youngest to oldest age group.
+	column age_group_sort = SWITCH ( TRUE(), 'public customers'[age] < 30, 1, 'public customers'[age] <= 44, 2, 'public customers'[age] <= 59, 3, 4 )
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 6dab2b0a-411e-420b-b5ac-af52bfa8342a
+		summarizeBy: none
 
 	partition 'public customers' = m
 		mode: import

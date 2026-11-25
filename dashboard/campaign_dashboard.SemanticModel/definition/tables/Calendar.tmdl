@@ -5,25 +5,30 @@ table Calendar
 
 	column Date
 		isUnique
+		lineageTag: f76dbc61-aa7a-4bab-9276-c07aa5875f68
 		isNameInferred
 		sourceColumn: [Date]
 
 	column Year
+		lineageTag: 096b4063-3f7c-4e4f-9ec8-042eedb77110
 		isNameInferred
 		sourceColumn: [Year]
 
 	column 'Month Number'
 		isHidden
+		lineageTag: a20564d6-e774-4ca7-9866-c268291c13ee
 		isNameInferred
 		sourceColumn: [Month Number]
 
 	column Month
+		lineageTag: 85bdbcb0-f188-4df1-8d73-b53753f4c50e
 		isNameInferred
 		sourceColumn: [Month]
 		sortByColumn: 'Month Start'
 
 	column 'Month Start'
 		isHidden
+		lineageTag: 33099db8-2682-43ac-a055-205f77fef134
 		isNameInferred
 		sourceColumn: [Month Start]
 

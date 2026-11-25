@@ -107,7 +107,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Page navigator for the single existing Executive Overview page.'"
+                  "Value": "'Page navigator for Executive Overview, Campaign Analysis, and Customer Insights.'"
                 }
               }
             }

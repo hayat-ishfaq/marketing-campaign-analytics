@@ -107,7 +107,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Page navigator for Executive Overview, Campaign Analysis, Customer Insights, and About the data.'"
+                  "Value": "'Page navigator for Executive Overview, Campaign Analysis, and Customer Insights.'"
                 }
               }
             }

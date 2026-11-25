@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.15.0/schema.json",
   "name": "7d44e77c8c74cdcb103c",
   "position": {
     "x": 19,
@@ -27,7 +27,8 @@
                 }
               },
               "queryRef": "public campaigns.channel_used",
-              "nativeQueryRef": "channel_used"
+              "nativeQueryRef": "channel_used",
+              "active": true
             }
           ]
         },
@@ -79,8 +80,7 @@
             },
             "direction": "Ascending"
           }
-        ],
-        "isDefaultSort": false
+        ]
       }
     },
     "objects": {

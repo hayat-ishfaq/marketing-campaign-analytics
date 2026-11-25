@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.15.0/schema.json",
   "name": "15eb84a05a9d3bc50d87",
   "position": {
     "x": 640,
@@ -27,7 +27,8 @@
                 }
               },
               "queryRef": "Calendar.Month Start",
-              "nativeQueryRef": "Month Start"
+              "nativeQueryRef": "Month Start",
+              "active": true
             }
           ]
         },
@@ -79,8 +80,7 @@
             },
             "direction": "Ascending"
           }
-        ],
-        "isDefaultSort": false
+        ]
       }
     },
     "objects": {
