@@ -1,0 +1,316 @@
+table 'public customers'
+	lineageTag: bb0424cf-8055-490a-b8ee-e5919d3082cd
+
+	column id
+		dataType: int64
+		formatString: 0
+		lineageTag: 7ab966aa-4551-4b58-be72-cd73793d7f43
+		summarizeBy: sum
+		sourceColumn: id
+
+		annotation SummarizationSetBy = Automatic
+
+	column year_birth
+		dataType: int64
+		formatString: 0
+		lineageTag: 85f3e72b-e5c7-4741-98b7-97d8db1cfc3e
+		summarizeBy: sum
+		sourceColumn: year_birth
+
+		annotation SummarizationSetBy = Automatic
+
+	column education
+		dataType: string
+		lineageTag: 04e02556-d7bf-4bb4-ae27-24cf51e39d2b
+		summarizeBy: none
+		sourceColumn: education
+
+		annotation SummarizationSetBy = Automatic
+
+	column marital_status
+		dataType: string
+		lineageTag: 702ab92e-a229-44bb-aa50-016c5b7c06fd
+		summarizeBy: none
+		sourceColumn: marital_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column income
+		dataType: double
+		lineageTag: 1af8eb4a-b7d3-45ee-ac40-8cdd32d5c492
+		summarizeBy: sum
+		sourceColumn: income
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column kidhome
+		dataType: int64
+		formatString: 0
+		lineageTag: c0bb4f56-426c-4354-ac07-fb1620fae06f
+		summarizeBy: sum
+		sourceColumn: kidhome
+
+		annotation SummarizationSetBy = Automatic
+
+	column teenhome
+		dataType: int64
+		formatString: 0
+		lineageTag: 78c1719f-95cb-4062-84aa-1eee0bacee3b
+		summarizeBy: sum
+		sourceColumn: teenhome
+
+		annotation SummarizationSetBy = Automatic
+
+	column dt_customer
+		dataType: string
+		lineageTag: a1362eac-7ad8-48e5-b09b-397e81d717f6
+		summarizeBy: none
+		sourceColumn: dt_customer
+
+		annotation SummarizationSetBy = Automatic
+
+	column recency
+		dataType: int64
+		formatString: 0
+		lineageTag: 63cdf41a-c6a9-4a2c-9709-6a3d7ff2dd86
+		summarizeBy: sum
+		sourceColumn: recency
+
+		annotation SummarizationSetBy = Automatic
+
+	column mntwines
+		dataType: int64
+		formatString: 0
+		lineageTag: adfefebc-51ad-4788-bfb2-f742fadefca8
+		summarizeBy: sum
+		sourceColumn: mntwines
+
+		annotation SummarizationSetBy = Automatic
+
+	column mntfruits
+		dataType: int64
+		formatString: 0
+		lineageTag: ab562a7c-7bac-45c1-b31b-db6f37c00661
+		summarizeBy: sum
+		sourceColumn: mntfruits
+
+		annotation SummarizationSetBy = Automatic
+
+	column mntmeatproducts
+		dataType: int64
+		formatString: 0
+		lineageTag: a4cedc0c-2756-47c6-ac83-4899502ca8c2
+		summarizeBy: sum
+		sourceColumn: mntmeatproducts
+
+		annotation SummarizationSetBy = Automatic
+
+	column mntfishproducts
+		dataType: int64
+		formatString: 0
+		lineageTag: c3f6589b-185d-4a7b-908c-565e7b8ff7fe
+		summarizeBy: sum
+		sourceColumn: mntfishproducts
+
+		annotation SummarizationSetBy = Automatic
+
+	column mntsweetproducts
+		dataType: int64
+		formatString: 0
+		lineageTag: 5157fc92-d244-4893-bb94-9b0d9b1f01ad
+		summarizeBy: sum
+		sourceColumn: mntsweetproducts
+
+		annotation SummarizationSetBy = Automatic
+
+	column mntgoldprods
+		dataType: int64
+		formatString: 0
+		lineageTag: 07bed5f9-fa7b-4699-a887-85612d668b07
+		summarizeBy: sum
+		sourceColumn: mntgoldprods
+
+		annotation SummarizationSetBy = Automatic
+
+	column numdealspurchases
+		dataType: int64
+		formatString: 0
+		lineageTag: 7fa4217f-8250-48fa-b01c-c64271eb0332
+		summarizeBy: sum
+		sourceColumn: numdealspurchases
+
+		annotation SummarizationSetBy = Automatic
+
+	column numwebpurchases
+		dataType: int64
+		formatString: 0
+		lineageTag: 19ccb393-fb59-4c06-b861-e4c81d983ef7
+		summarizeBy: sum
+		sourceColumn: numwebpurchases
+
+		annotation SummarizationSetBy = Automatic
+
+	column numcatalogpurchases
+		dataType: int64
+		formatString: 0
+		lineageTag: c3731069-14f5-4c53-8e34-92dc42b6d277
+		summarizeBy: sum
+		sourceColumn: numcatalogpurchases
+
+		annotation SummarizationSetBy = Automatic
+
+	column numstorepurchases
+		dataType: int64
+		formatString: 0
+		lineageTag: 1e90df39-776a-40c6-b7c6-19db7e21f075
+		summarizeBy: sum
+		sourceColumn: numstorepurchases
+
+		annotation SummarizationSetBy = Automatic
+
+	column numwebvisitsmonth
+		dataType: int64
+		formatString: 0
+		lineageTag: 776bd684-a228-42a6-a917-b0141a28ce22
+		summarizeBy: sum
+		sourceColumn: numwebvisitsmonth
+
+		annotation SummarizationSetBy = Automatic
+
+	column acceptedcmp3
+		dataType: int64
+		formatString: 0
+		lineageTag: 65bd80c6-f2d5-45e6-92dd-a5774118adfc
+		summarizeBy: sum
+		sourceColumn: acceptedcmp3
+
+		annotation SummarizationSetBy = Automatic
+
+	column acceptedcmp4
+		dataType: int64
+		formatString: 0
+		lineageTag: 0c8134d7-9b81-411e-b6cd-8ef9eff1cf1f
+		summarizeBy: sum
+		sourceColumn: acceptedcmp4
+
+		annotation SummarizationSetBy = Automatic
+
+	column acceptedcmp5
+		dataType: int64
+		formatString: 0
+		lineageTag: ecdd42be-3433-4d08-9457-0af73ac828cb
+		summarizeBy: sum
+		sourceColumn: acceptedcmp5
+
+		annotation SummarizationSetBy = Automatic
+
+	column acceptedcmp1
+		dataType: int64
+		formatString: 0
+		lineageTag: 0b82c1e9-c14e-4bfa-addd-f61aff29b006
+		summarizeBy: sum
+		sourceColumn: acceptedcmp1
+
+		annotation SummarizationSetBy = Automatic
+
+	column acceptedcmp2
+		dataType: int64
+		formatString: 0
+		lineageTag: 76e0d6f6-43fa-46c9-aa79-a56b5957bb79
+		summarizeBy: sum
+		sourceColumn: acceptedcmp2
+
+		annotation SummarizationSetBy = Automatic
+
+	column complain
+		dataType: int64
+		formatString: 0
+		lineageTag: a5369fad-f6ca-41f8-ad43-347f6fea1285
+		summarizeBy: sum
+		sourceColumn: complain
+
+		annotation SummarizationSetBy = Automatic
+
+	column z_costcontact
+		dataType: int64
+		formatString: 0
+		lineageTag: 285043cd-62b2-43a8-9abf-41f35c1e774c
+		summarizeBy: sum
+		sourceColumn: z_costcontact
+
+		annotation SummarizationSetBy = Automatic
+
+	column z_revenue
+		dataType: int64
+		formatString: 0
+		lineageTag: 96b773e6-9f14-4fcf-a20a-fd585712d30f
+		summarizeBy: sum
+		sourceColumn: z_revenue
+
+		annotation SummarizationSetBy = Automatic
+
+	column response
+		dataType: int64
+		formatString: 0
+		lineageTag: adfb32a3-84db-410b-9ae1-9cd57a4846fc
+		summarizeBy: sum
+		sourceColumn: response
+
+		annotation SummarizationSetBy = Automatic
+
+	column age
+		dataType: int64
+		formatString: 0
+		lineageTag: cfb3d200-a08d-4f2b-b7d8-247b24581b30
+		summarizeBy: sum
+		sourceColumn: age
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_spend
+		dataType: int64
+		formatString: 0
+		lineageTag: 29c3d329-5116-4217-8490-5e909ad202db
+		summarizeBy: sum
+		sourceColumn: total_spend
+
+		annotation SummarizationSetBy = Automatic
+
+	column campaigns_accepted
+		dataType: int64
+		formatString: 0
+		lineageTag: 26959dda-4f48-485e-ba67-e64cfdbb2cd0
+		summarizeBy: sum
+		sourceColumn: campaigns_accepted
+
+		annotation SummarizationSetBy = Automatic
+
+	column age_group
+		dataType: string
+		lineageTag: 7d119173-7713-468f-9acd-770e815ac005
+		summarizeBy: none
+		sourceColumn: age_group
+
+		annotation SummarizationSetBy = Automatic
+
+	column income_group
+		dataType: string
+		lineageTag: 2a8bd6bc-84fd-4fcd-ba05-849b8b060ccc
+		summarizeBy: none
+		sourceColumn: income_group
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'public customers' = m
+		mode: import
+		source =
+				let
+				  Source = PostgreSQL.Database("localhost", "marketing_analytics"),
+				  #"Navigation 1" = Source{[Schema = "public", Item = "customers"]}[Data]
+				in
+				  #"Navigation 1"
+
+	annotation PBI_ResultType = Table
+

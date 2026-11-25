@@ -1,0 +1,132 @@
+// =====================================================================
+// Power BI measures: Marketing Campaign Performance Analytics
+//
+// Tables expected (imported from PostgreSQL, lowercase column names):
+//   campaigns  - campaign_id, channel_used, campaign_type, target_audience,
+//                customer_segment, location, language, duration_days,
+//                conversion_rate, acquisition_cost, roi, clicks, impressions,
+//                campaign_date, revenue, profit, ctr, cpc, roas, year, month, quarter
+//   customers  - age_group, income_group, total_spend, campaigns_accepted, ...
+//   Calendar   - calculated table (first block below)
+//
+// If you import the cleaned CSVs instead, their headers are mixed case
+// (Channel_Used, ROAS, ...). In Power Query, lowercase every column name first
+// (Transform > Use Table.TransformColumnNames with Text.Lower), or edit the
+// names below to match.
+//
+// How to use: Modeling > New measure, paste ONE block at a time.
+// Tip: create an empty table named _Measures (Home > Enter data) and keep
+// all measures in it so they are easy to find.
+//
+// Suggested formats: money = $#,0 ; ROAS = 0.00 ; percentages = 0.0%
+// =====================================================================
+
+
+// ---------------------------------------------------------------------
+// 1. CALENDAR TABLE (Modeling > New table)
+//    Then: Model view > relate Calendar[Date] (one) to campaigns[campaign_date] (many),
+//    mark Calendar as a date table, and set "Month" to sort by "Month Start".
+// ---------------------------------------------------------------------
+Calendar =
+ADDCOLUMNS (
+    CALENDAR ( MIN ( campaigns[campaign_date] ), MAX ( campaigns[campaign_date] ) ),
+    "Year", YEAR ( [Date] ),
+    "Month Number", MONTH ( [Date] ),
+    "Month", FORMAT ( [Date], "mmm yyyy" ),
+    "Month Start", DATE ( YEAR ( [Date] ), MONTH ( [Date] ), 1 )
+)
+
+
+// ---------------------------------------------------------------------
+// 2. CORE CAMPAIGN MEASURES
+// ---------------------------------------------------------------------
+Campaign Count = COUNTROWS ( campaigns )
+
+Total Spend = SUM ( campaigns[acquisition_cost] )
+
+Total Revenue = SUM ( campaigns[revenue] )
+
+Total Profit = SUM ( campaigns[profit] )
+
+// ROAS = revenue / spend (aggregated from totals, not an average of ratios)
+ROAS = DIVIDE ( [Total Revenue], [Total Spend] )
+
+// ROI % = (revenue - spend) / spend. Format as percentage.
+ROI % = DIVIDE ( [Total Revenue] - [Total Spend], [Total Spend] )
+
+Total Clicks = SUM ( campaigns[clicks] )
+
+// Conversions are ESTIMATED: the data has no customer counts.
+Est Conversions = SUMX ( campaigns, campaigns[clicks] * campaigns[conversion_rate] )
+
+// If conversion_rate is stored as a percentage (e.g. 8.0), divide by 100 above.
+Est CAC = DIVIDE ( [Total Spend], [Est Conversions] )
+
+Cost Per Click = DIVIDE ( [Total Spend], [Total Clicks] )
+
+Avg Conversion Rate = AVERAGE ( campaigns[conversion_rate] )
+
+
+// ---------------------------------------------------------------------
+// 3. CHANNEL COMPARISON MEASURES
+// ---------------------------------------------------------------------
+// ROAS for the whole portfolio, ignoring the channel filter (benchmark line)
+ROAS All Channels =
+CALCULATE ( [ROAS], ALL ( campaigns[channel_used] ) )
+
+ROAS vs Portfolio = [ROAS] - [ROAS All Channels]
+
+// Gap between best and worst channel inside the current filter context
+ROAS Channel Spread =
+VAR t =
+    ADDCOLUMNS ( VALUES ( campaigns[channel_used] ), "@r", [ROAS] )
+RETURN
+    MAXX ( t, [@r] ) - MINX ( t, [@r] )
+
+// Spread as a share of average ROAS. Format as percentage (about 0.7% in this data).
+ROAS Spread % = DIVIDE ( [ROAS Channel Spread], [ROAS] )
+
+// Share of the visible budget / revenue (use in a channel visual)
+Budget Share % =
+DIVIDE (
+    [Total Spend],
+    CALCULATE ( [Total Spend], ALLSELECTED ( campaigns[channel_used] ) )
+)
+
+Revenue Share % =
+DIVIDE (
+    [Total Revenue],
+    CALCULATE ( [Total Revenue], ALLSELECTED ( campaigns[channel_used] ) )
+)
+
+// Positive = channel earns more revenue share than budget share. Format as 0.00%
+Share Gap = [Revenue Share %] - [Budget Share %]
+
+
+// ---------------------------------------------------------------------
+// 4. TIME MEASURES (need the Calendar table and its relationship)
+// ---------------------------------------------------------------------
+Revenue Prior Month =
+CALCULATE ( [Total Revenue], DATEADD ( 'Calendar'[Date], -1, MONTH ) )
+
+Revenue MoM % =
+DIVIDE ( [Total Revenue] - [Revenue Prior Month], [Revenue Prior Month] )
+
+
+// ---------------------------------------------------------------------
+// 5. CUSTOMER MEASURES (customers table is separate: do NOT relate it to campaigns)
+// ---------------------------------------------------------------------
+Customer Count = COUNTROWS ( customers )
+
+Avg Spend Per Customer = AVERAGE ( customers[total_spend] )
+
+// Share of customers who accepted at least one campaign
+Acceptance Rate =
+DIVIDE (
+    CALCULATE ( COUNTROWS ( customers ), customers[campaigns_accepted] > 0 ),
+    COUNTROWS ( customers )
+)
+
+// Show under customer visuals so small groups are not over-read
+Small Group Warning =
+IF ( [Customer Count] < 100, "Fewer than 100 customers: interpret with caution", BLANK () )

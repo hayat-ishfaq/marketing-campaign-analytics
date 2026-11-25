@@ -1,0 +1,236 @@
+table 'public campaigns'
+	lineageTag: dcdbaaca-95cb-42dd-9fb3-7939dc7c2c7a
+
+	column campaign_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 176eb6ac-2cb0-449a-8e95-33c51f64890e
+		summarizeBy: sum
+		sourceColumn: campaign_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column company
+		dataType: string
+		lineageTag: 0c4b8f3a-51fb-488b-b503-98d87d153f58
+		summarizeBy: none
+		sourceColumn: company
+
+		annotation SummarizationSetBy = Automatic
+
+	column campaign_type
+		dataType: string
+		lineageTag: 8f4c3c12-bdae-4195-9c0f-004745e7dd74
+		summarizeBy: none
+		sourceColumn: campaign_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column target_audience
+		dataType: string
+		lineageTag: e7a8fd0e-1265-47df-b4c4-8d346ea2f723
+		summarizeBy: none
+		sourceColumn: target_audience
+
+		annotation SummarizationSetBy = Automatic
+
+	column duration_days
+		dataType: int64
+		formatString: 0
+		lineageTag: 592b01af-ad53-4cef-a9b6-5ad5539bfb02
+		summarizeBy: sum
+		sourceColumn: duration_days
+
+		annotation SummarizationSetBy = Automatic
+
+	column channel_used
+		dataType: string
+		lineageTag: aa2c387c-5650-44e3-98d9-41411443d204
+		summarizeBy: none
+		sourceColumn: channel_used
+
+		annotation SummarizationSetBy = Automatic
+
+	column conversion_rate
+		dataType: double
+		lineageTag: 3ce5cf14-4bd8-4dac-bd66-439e7979d057
+		summarizeBy: sum
+		sourceColumn: conversion_rate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column acquisition_cost
+		dataType: double
+		lineageTag: 2679765a-72e7-486b-bf9a-03254a9be5a3
+		summarizeBy: sum
+		sourceColumn: acquisition_cost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column roi
+		dataType: double
+		lineageTag: a58ab070-79a1-4529-a9b3-2aaddbed686a
+		summarizeBy: sum
+		sourceColumn: roi
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column location
+		dataType: string
+		lineageTag: 53dc266c-15a9-4b6d-900b-0ee47b6fb810
+		summarizeBy: none
+		sourceColumn: location
+
+		annotation SummarizationSetBy = Automatic
+
+	column language
+		dataType: string
+		lineageTag: 1ba9dcde-63ea-458e-904b-b939e0cbe8c3
+		summarizeBy: none
+		sourceColumn: language
+
+		annotation SummarizationSetBy = Automatic
+
+	column clicks
+		dataType: int64
+		formatString: 0
+		lineageTag: 0be42310-45d4-4e18-9662-0a331c94e440
+		summarizeBy: sum
+		sourceColumn: clicks
+
+		annotation SummarizationSetBy = Automatic
+
+	column impressions
+		dataType: int64
+		formatString: 0
+		lineageTag: 98b80c48-a08a-464f-b02f-e1806e0475ae
+		summarizeBy: sum
+		sourceColumn: impressions
+
+		annotation SummarizationSetBy = Automatic
+
+	column engagement_score
+		dataType: int64
+		formatString: 0
+		lineageTag: edf1ca74-4902-4c31-bb44-3e5891178dab
+		summarizeBy: sum
+		sourceColumn: engagement_score
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_segment
+		dataType: string
+		lineageTag: 8833a38e-a729-4a8f-ae00-aa3bdd412bff
+		summarizeBy: none
+		sourceColumn: customer_segment
+
+		annotation SummarizationSetBy = Automatic
+
+	column campaign_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 4260273b-d46f-4c97-9558-db28a8015ff9
+		summarizeBy: none
+		sourceColumn: campaign_date
+
+		variation Variation
+			isDefault
+			relationship: 2eaf5b74-5f6f-4fd1-96af-21c7ce8d6721
+			defaultHierarchy: LocalDateTable_147fce4a-88d4-41de-be1d-c54396072ff2.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column revenue
+		dataType: double
+		lineageTag: eeeb1c73-ac73-4ccf-8811-36677aa2cc2f
+		summarizeBy: sum
+		sourceColumn: revenue
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column profit
+		dataType: double
+		lineageTag: 0660ce0e-cd8d-463f-9506-ce026560ef0d
+		summarizeBy: sum
+		sourceColumn: profit
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ctr
+		dataType: double
+		lineageTag: 83b2c73f-cf66-4279-a8f7-492708bd5181
+		summarizeBy: sum
+		sourceColumn: ctr
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column cpc
+		dataType: double
+		lineageTag: e473692b-0eaf-48fc-81d5-dcd6ed1c3426
+		summarizeBy: sum
+		sourceColumn: cpc
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column roas
+		dataType: double
+		lineageTag: 78143472-49df-477f-a150-a339cf80c132
+		summarizeBy: sum
+		sourceColumn: roas
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column year
+		dataType: int64
+		formatString: 0
+		lineageTag: ccffac3e-cef5-43fd-a770-55aaded2556f
+		summarizeBy: sum
+		sourceColumn: year
+
+		annotation SummarizationSetBy = Automatic
+
+	column month
+		dataType: int64
+		formatString: 0
+		lineageTag: c1bb115f-e79e-488b-8a39-46ebc7db5a22
+		summarizeBy: sum
+		sourceColumn: month
+
+		annotation SummarizationSetBy = Automatic
+
+	column quarter
+		dataType: int64
+		formatString: 0
+		lineageTag: e8587d1b-7f6d-4d9c-827d-6ca998691c5d
+		summarizeBy: sum
+		sourceColumn: quarter
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'public campaigns' = m
+		mode: import
+		source =
+				let
+				  Source = PostgreSQL.Database("localhost", "marketing_analytics"),
+				  #"Navigation 1" = Source{[Schema = "public", Item = "campaigns"]}[Data]
+				in
+				  #"Navigation 1"
+
+	annotation PBI_ResultType = Table
+
