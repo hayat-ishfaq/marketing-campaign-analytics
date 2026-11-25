@@ -1,5 +1,0 @@
-relationship 2eaf5b74-5f6f-4fd1-96af-21c7ce8d6721
-	joinOnDateBehavior: datePartOnly
-	fromColumn: 'public campaigns'.campaign_date
-	toColumn: LocalDateTable_147fce4a-88d4-41de-be1d-c54396072ff2.Date
-

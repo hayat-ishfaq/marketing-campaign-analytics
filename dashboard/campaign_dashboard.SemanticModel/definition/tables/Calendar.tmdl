@@ -1,0 +1,33 @@
+/// Calendar date dimension for campaign date analysis.
+table Calendar
+	lineageTag: e4a50757-3903-4129-8fd2-b0e62cd0f146
+	dataCategory: Time
+
+	column Date
+		isUnique
+		isNameInferred
+		sourceColumn: [Date]
+
+	column Year
+		isNameInferred
+		sourceColumn: [Year]
+
+	column 'Month Number'
+		isHidden
+		isNameInferred
+		sourceColumn: [Month Number]
+
+	column Month
+		isNameInferred
+		sourceColumn: [Month]
+		sortByColumn: 'Month Start'
+
+	column 'Month Start'
+		isHidden
+		isNameInferred
+		sourceColumn: [Month Start]
+
+	partition Calendar = calculated
+		mode: import
+		source = ADDCOLUMNS ( CALENDAR ( MIN ( 'public campaigns'[campaign_date] ), MAX ( 'public campaigns'[campaign_date] ) ), "Year", YEAR ( [Date] ), "Month Number", MONTH ( [Date] ), "Month", FORMAT ( [Date], "mmm yyyy" ), "Month Start", DATE ( YEAR ( [Date] ), MONTH ( [Date] ), 1 ) )
+

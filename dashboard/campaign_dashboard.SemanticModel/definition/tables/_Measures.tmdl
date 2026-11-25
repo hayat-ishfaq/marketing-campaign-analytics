@@ -1,0 +1,171 @@
+/// Home for campaign and customer measures.
+table _Measures
+	lineageTag: f1359a28-e993-4155-809e-4e2dcefa4617
+
+	/// Counts campaign rows.
+	measure 'Campaign Count' = COUNTROWS ( 'public campaigns' )
+		formatString: #,0
+		displayFolder: Core
+		lineageTag: 94dc599f-d5e4-4101-a7ab-f630d7dcd12f
+
+	/// Sums campaign acquisition costs.
+	measure 'Total Spend' = SUM ( 'public campaigns'[acquisition_cost] )
+		formatString: $#,0
+		displayFolder: Core
+		lineageTag: 21648966-4922-474b-853c-e8560b7ca8c0
+
+	/// Sums campaign revenue.
+	measure 'Total Revenue' = SUM ( 'public campaigns'[revenue] )
+		formatString: $#,0
+		displayFolder: Core
+		lineageTag: 57f9fd60-f2b6-4789-8659-ed62faa731b0
+
+	/// Sums campaign profit.
+	measure 'Total Profit' = SUM ( 'public campaigns'[profit] )
+		formatString: $#,0
+		displayFolder: Core
+		lineageTag: 13878e89-81d4-46e7-8eba-9e13d30c02b5
+
+	/// Divides total revenue by total spend.
+	measure ROAS = DIVIDE ( [Total Revenue], [Total Spend] )
+		formatString: 0.00
+		displayFolder: Core
+		lineageTag: c6e6fe0f-81d0-487e-a8a8-211db705732a
+
+	/// Calculates revenue less spend as a share of spend.
+	measure 'ROI %' = DIVIDE ( [Total Revenue] - [Total Spend], [Total Spend] )
+		formatString: 0.0%
+		displayFolder: Core
+		lineageTag: 746db102-aeb7-473a-828b-b228f8fc907c
+
+	/// Sums campaign clicks.
+	measure 'Total Clicks' = SUM ( 'public campaigns'[clicks] )
+		formatString: #,0
+		displayFolder: Core
+		lineageTag: b2b587ea-e632-4de0-9563-cdab4e5cd5d8
+
+	/// Estimates conversions from clicks and decimal conversion rates.
+	measure 'Est Conversions' = SUMX ( 'public campaigns', 'public campaigns'[clicks] * 'public campaigns'[conversion_rate] )
+		formatString: #,0
+		displayFolder: Core
+		lineageTag: 21a87f92-59fc-4509-8906-196d36c0ec01
+
+	/// Divides total spend by estimated conversions.
+	measure 'Est CAC' = DIVIDE ( [Total Spend], [Est Conversions] )
+		formatString: $#,0
+		displayFolder: Core
+		lineageTag: 57e47fc2-333e-450a-97c3-fdbbf8da310d
+
+	/// Divides total spend by total clicks.
+	measure 'Cost Per Click' = DIVIDE ( [Total Spend], [Total Clicks] )
+		formatString: $#,0
+		displayFolder: Core
+		lineageTag: 070cc44e-965b-45b4-9283-76cb8b8c0e62
+
+	/// Averages the campaign conversion rate.
+	measure 'Avg Conversion Rate' = AVERAGE ( 'public campaigns'[conversion_rate] )
+		formatString: 0.0%
+		displayFolder: Core
+		lineageTag: 1f446b54-85b3-4bf6-8dd1-f605db1bac8e
+
+	/// Returns portfolio ROAS with the channel filter removed.
+	measure 'ROAS All Channels' = CALCULATE ( [ROAS], ALL ( 'public campaigns'[channel_used] ) )
+		formatString: 0.00
+		displayFolder: Channel comparison
+		lineageTag: 080c71cc-a190-4b1a-8d09-d4e268a76598
+
+	/// Compares current ROAS with portfolio ROAS.
+	measure 'ROAS vs Portfolio' = [ROAS] - [ROAS All Channels]
+		formatString: 0.00
+		displayFolder: Channel comparison
+		lineageTag: cec2c857-9899-422d-bbcd-b337039c7424
+
+	/// Subtracts the lowest visible channel ROAS from the highest.
+	measure 'ROAS Channel Spread' = VAR t = ADDCOLUMNS ( VALUES ( 'public campaigns'[channel_used] ), "@r", [ROAS] ) RETURN MAXX ( t, [@r] ) - MINX ( t, [@r] )
+		formatString: 0.00
+		displayFolder: Channel comparison
+		lineageTag: 37308cdb-36dd-46f1-9093-6e4ae160f69e
+
+	/// Expresses the channel ROAS spread as a share of current ROAS.
+	measure 'ROAS Spread %' = DIVIDE ( [ROAS Channel Spread], [ROAS] )
+		formatString: 0.0%
+		displayFolder: Channel comparison
+		lineageTag: 88992177-0e86-434b-b263-0e065ff142e3
+
+	/// Shows channel spend as a share of selected-channel spend.
+	measure 'Budget Share %' = DIVIDE ( [Total Spend], CALCULATE ( [Total Spend], ALLSELECTED ( 'public campaigns'[channel_used] ) ) )
+		formatString: 0.0%
+		displayFolder: Channel comparison
+		lineageTag: 28e01ee5-84d3-44f1-ab44-668dee6863ff
+
+	/// Shows channel revenue as a share of selected-channel revenue.
+	measure 'Revenue Share %' = DIVIDE ( [Total Revenue], CALCULATE ( [Total Revenue], ALLSELECTED ( 'public campaigns'[channel_used] ) ) )
+		formatString: 0.0%
+		displayFolder: Channel comparison
+		lineageTag: 230301cd-450c-4398-bb24-c552e1503d6a
+
+	/// Measures the gap between revenue share and budget share.
+	measure 'Share Gap' = [Revenue Share %] - [Budget Share %]
+		formatString: 0.00%
+		displayFolder: Channel comparison
+		lineageTag: e8cb9853-3bd5-493d-913e-2e868635ecfc
+
+	/// Returns revenue for the prior month.
+	measure 'Revenue Prior Month' = CALCULATE ( [Total Revenue], DATEADD ( 'Calendar'[Date], -1, MONTH ) )
+		formatString: $#,0
+		displayFolder: Time
+		lineageTag: a489ea29-3b97-42c9-bce5-90b67d4bc395
+
+	/// Calculates month-over-month revenue change.
+	measure 'Revenue MoM %' = DIVIDE ( [Total Revenue] - [Revenue Prior Month], [Revenue Prior Month] )
+		formatString: 0.0%
+		displayFolder: Time
+		lineageTag: 9dec5ef0-cb76-480b-b96c-b2f578f4782b
+
+	/// Counts customer rows.
+	measure 'Customer Count' = COUNTROWS ( 'public customers' )
+		formatString: #,0
+		displayFolder: Customers
+		lineageTag: 87ae9244-3216-44b6-8b10-9006b458e5bd
+
+	/// Averages total spend per customer.
+	measure 'Avg Spend Per Customer' = AVERAGE ( 'public customers'[total_spend] )
+		formatString: $#,0
+		displayFolder: Customers
+		lineageTag: 206bdfd8-04a6-40c6-b142-6336f80b73e3
+
+	/// Calculates the share of customers accepting at least one campaign.
+	measure 'Acceptance Rate' = DIVIDE ( CALCULATE ( COUNTROWS ( 'public customers' ), 'public customers'[campaigns_accepted] > 0 ), COUNTROWS ( 'public customers' ) )
+		formatString: 0.0%
+		displayFolder: Customers
+		lineageTag: dda35f9a-36b7-40f5-9299-34c20e22931a
+
+	/// Warns when the current customer group contains fewer than 100 people.
+	measure 'Small Group Warning' = IF ( [Customer Count] < 100, "Fewer than 100 customers: interpret with caution", BLANK () )
+		displayFolder: Customers
+		lineageTag: c195e783-4308-41c6-bd4f-d2fe79a6aa64
+
+	/// Builds a dynamic chart title with the channel ROAS spread.
+	measure 'Title ROAS by Channel' = "ROAS by channel: best and worst differ by " & FORMAT ( [ROAS Spread %], "0.0%" )
+		displayFolder: Titles
+		lineageTag: e0f44e8d-4300-4c40-8bec-7a0b946dad1c
+
+	/// Builds a dynamic chart title with the estimated CAC spread.
+	measure 'Title CAC by Channel' = "Estimated CAC by channel: spread of " & FORMAT ( DIVIDE ( MAXX ( VALUES ( 'public campaigns'[channel_used] ), [Est CAC] ) - MINX ( VALUES ( 'public campaigns'[channel_used] ), [Est CAC] ), MINX ( VALUES ( 'public campaigns'[channel_used] ), [Est CAC] ) ), "0.0%" )
+		displayFolder: Titles
+		lineageTag: 5e036ef1-d0cd-4663-be78-7bbe5207bde2
+
+	/// Builds a dynamic title with the largest absolute channel share gap.
+	measure 'Title Share Gap' = "Revenue share tracks budget share within " & FORMAT ( MAXX ( VALUES ( 'public campaigns'[channel_used] ), ABS ( [Share Gap] ) ) * 100, "0.00" ) & " points"
+		displayFolder: Titles
+		lineageTag: ed324b4c-f0f7-4062-ae36-d4f8d76f9457
+
+	column 'Measure Holder'
+		isHidden
+		isNameInferred
+		sourceColumn: [Measure Holder]
+
+	partition _Measures = calculated
+		mode: import
+		source = DATATABLE ( "Measure Holder", STRING, { { "" } } )
+
