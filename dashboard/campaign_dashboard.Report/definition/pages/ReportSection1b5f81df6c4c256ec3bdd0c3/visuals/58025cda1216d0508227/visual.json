@@ -1,0 +1,205 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.15.0/schema.json",
+  "name": "58025cda1216d0508227",
+  "position": {
+    "x": 19,
+    "y": 606,
+    "z": 800,
+    "height": 89,
+    "width": 1242,
+    "tabOrder": 800
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "How to read these tables",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "16px",
+                      "color": "#252423",
+                      "fontWeight": "bold"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "left"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "• ",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Symbol",
+                      "fontSize": "12px",
+                      "color": "#4B5563"
+                    }
+                  },
+                  {
+                    "value": "Profit = spend x ROI. Both budget size and ROI vary at random in this dataset, so the top campaigns are mainly the largest budgets with the highest ROI.",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "12px",
+                      "color": "#4B5563"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "left"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "• ",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Symbol",
+                      "fontSize": "12px",
+                      "color": "#4B5563"
+                    }
+                  },
+                  {
+                    "value": "Use the page to see the range of outcomes, not to pick winning channels: channel differences are under 1%.",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "12px",
+                      "color": "#4B5563"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "left"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FFFFFF'"
+                    }
+                  }
+                }
+              }
+            },
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#D8DEE8'"
+                    }
+                  }
+                }
+              }
+            },
+            "radius": {
+              "expr": {
+                "Literal": {
+                  "Value": "6D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "padding": [
+        {
+          "properties": {
+            "top": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            },
+            "bottom": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            },
+            "left": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            },
+            "right": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "visualHeader": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'How to read these tables: profit equals spend times ROI; use rankings to see outcome range, not to select channels.'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

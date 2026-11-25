@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "58dfd91b99aa7cc18a4f",
   "position": {
-    "x": 888,
+    "x": 640,
     "y": 7,
     "z": 200,
     "height": 38,
-    "width": 373,
+    "width": 620,
     "tabOrder": 200
   },
   "visual": {
@@ -107,7 +107,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Page navigator for Executive Overview, Campaign Analysis, and Customer Insights.'"
+                  "Value": "'Page navigator for Executive Overview, Campaign Analysis, Campaign Rankings, and Customer Insights.'"
                 }
               }
             }
