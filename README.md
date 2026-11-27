@@ -161,4 +161,4 @@ Because the campaign data is flat by construction, the most useful lesson of thi
 
 ## About
 
-Built by **Hayat**, final-year Software Engineering student. [LinkedIn](https://www.linkedin.com/) | [Portfolio](https://hayat-ishfaq-portfolio.vercel.app) | [GitHub](https://github.com/)
+Built by **Hayat**, Software Engineer. [LinkedIn](www.linkedin.com/in/hayat-ishfaq) | [Portfolio](https://www.hayatishfaq.tech/) | [GitHub](https://github.com/hayat-ishfaq)
