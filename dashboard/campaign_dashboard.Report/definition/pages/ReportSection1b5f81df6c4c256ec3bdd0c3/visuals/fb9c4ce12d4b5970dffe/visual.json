@@ -131,8 +131,7 @@
             },
             "direction": "Ascending"
           }
-        ],
-        "isDefaultSort": false
+        ]
       }
     },
     "objects": {
@@ -185,14 +184,14 @@
             "autoSizeColumnWidth": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "true"
                 }
               }
             },
             "columnAdjustment": {
               "expr": {
                 "Literal": {
-                  "Value": "'fixedWidth'"
+                  "Value": "'fitToContent'"
                 }
               }
             },
@@ -203,10 +202,10 @@
                 }
               }
             },
-            "customColumnWidth": {
+            "defaultColumnWidth": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "90D"
                 }
               }
             }
